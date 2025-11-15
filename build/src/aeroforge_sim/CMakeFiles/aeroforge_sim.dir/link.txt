@@ -1,0 +1,2 @@
+/usr/bin/ar qc libaeroforge_sim.a CMakeFiles/aeroforge_sim.dir/core/sim_core.cpp.o
+/usr/bin/ranlib libaeroforge_sim.a
