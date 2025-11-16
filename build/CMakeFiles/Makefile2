@@ -515,7 +515,10 @@ external/bullet/src/Bullet3Common/CMakeFiles/Bullet3Common.dir/clean:
 # Target rules for target src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir
 
 # All Build rule for target.
-src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all:
+src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all: external/bullet/src/BulletCollision/CMakeFiles/BulletCollision.dir/all
+src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all: external/bullet/src/BulletDynamics/CMakeFiles/BulletDynamics.dir/all
+src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all: external/bullet/src/LinearMath/CMakeFiles/LinearMath.dir/all
+src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all: external/bullet/src/Bullet3Common/CMakeFiles/Bullet3Common.dir/all
 	$(MAKE) $(MAKESILENT) -f src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/build.make src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/build.make src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" --progress-num=99,100 "Built target aeroforge_sim"
@@ -523,7 +526,7 @@ src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all:
 
 # Build rule for subdir invocation for target.
 src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" 85
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" 0
 .PHONY : src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/rule
@@ -547,6 +550,10 @@ src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/clean:
 # Target rules for target src/bindings/python/CMakeFiles/aeroforge_core.dir
 
 # All Build rule for target.
+src/bindings/python/CMakeFiles/aeroforge_core.dir/all: external/bullet/src/BulletCollision/CMakeFiles/BulletCollision.dir/all
+src/bindings/python/CMakeFiles/aeroforge_core.dir/all: external/bullet/src/BulletDynamics/CMakeFiles/BulletDynamics.dir/all
+src/bindings/python/CMakeFiles/aeroforge_core.dir/all: external/bullet/src/LinearMath/CMakeFiles/LinearMath.dir/all
+src/bindings/python/CMakeFiles/aeroforge_core.dir/all: external/bullet/src/Bullet3Common/CMakeFiles/Bullet3Common.dir/all
 src/bindings/python/CMakeFiles/aeroforge_core.dir/all: src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/all
 	$(MAKE) $(MAKESILENT) -f src/bindings/python/CMakeFiles/aeroforge_core.dir/build.make src/bindings/python/CMakeFiles/aeroforge_core.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/bindings/python/CMakeFiles/aeroforge_core.dir/build.make src/bindings/python/CMakeFiles/aeroforge_core.dir/build
@@ -555,7 +562,7 @@ src/bindings/python/CMakeFiles/aeroforge_core.dir/all: src/aeroforge_sim/CMakeFi
 
 # Build rule for subdir invocation for target.
 src/bindings/python/CMakeFiles/aeroforge_core.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" 3
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" 86
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/bindings/python/CMakeFiles/aeroforge_core.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" 0
 .PHONY : src/bindings/python/CMakeFiles/aeroforge_core.dir/rule

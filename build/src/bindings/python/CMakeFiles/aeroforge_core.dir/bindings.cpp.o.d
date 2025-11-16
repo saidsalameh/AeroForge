@@ -955,4 +955,128 @@ src/bindings/python/CMakeFiles/aeroforge_core.dir/bindings.cpp.o: \
   /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/pybind11/include/pybind11/detail/init.h \
   /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/pybind11/include/pybind11/gil_safe_call_once.h \
   /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/pybind11/include/pybind11/typing.h \
-  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/include/aeroforge_sim/sim_core.hpp
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/pybind11/include/pybind11/numpy.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/pybind11/include/pybind11/complex.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/complex \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/numeric \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/accumulate.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/inner_product.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/iota.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/gcd_lcm.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/pstl.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/transform_exclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/transform_inclusive_scan.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__numeric/transform_reduce.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/execution \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__type_traits/is_execution_policy.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/include/aeroforge_sim/sim_core.hpp \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/btBulletDynamicsCommon.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/btBulletCollisionCommon.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btCollisionWorld.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btVector3.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btScalar.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/float.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/float.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/arm_neon.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/arm_bf16.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/arm_vector_types.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btMinMax.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btAlignedAllocator.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btTransform.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btMatrix3x3.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btQuaternion.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btQuadWord.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btCollisionObject.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btMotionState.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btAlignedObjectArray.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btCollisionDispatcher.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btDispatcher.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/NarrowPhaseCollision/btPersistentManifold.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btTransformUtil.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btManifoldResult.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btCollisionObjectWrapper.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btCollisionCreateFunc.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btOverlappingPairCache.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btBoxShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btConvexInternalShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btConvexShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btCollisionShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btCollisionMargin.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btAabbUtil2.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btSphereShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btCapsuleShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btCylinderShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btConeShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btStaticPlaneShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btConcaveShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btTriangleCallback.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btConvexHullShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btTriangleMesh.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btStridingMeshInterface.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btTriangleMeshShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btOptimizedBvh.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btQuantizedBvh.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btTriangleInfoMap.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btHashMap.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btSerializer.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/memory.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btCompoundShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btTetrahedronShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btEmptyShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btMultiSphereShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionShapes/btUniformScalingShape.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/CollisionDispatch/btCollisionConfiguration.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btSimpleBroadphase.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btAxisSweep3.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btDbvt.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletCollision/BroadphaseCollision/btAxisSweep3Internal.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btDefaultMotionState.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btQuickprof.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btIDebugDraw.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Dynamics/btDynamicsWorld.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btContactSolverInfo.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/LinearMath/btThreads.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Dynamics/btRigidBody.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btJacobianEntry.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btTypedConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btSolverConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btSolverBody.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btHingeConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btSliderConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btUniversalConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btHinge2Constraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofSpring2Constraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btGearConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btFixedConstraint.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/ConstraintSolver/btConstraintSolver.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Vehicle/btVehicleRaycaster.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Vehicle/btWheelInfo.h \
+  /Users/said/Library/CloudStorage/OneDrive-Personnel/Project\ Documents/AeroForge/external/bullet/src/BulletDynamics/Dynamics/btActionInterface.h

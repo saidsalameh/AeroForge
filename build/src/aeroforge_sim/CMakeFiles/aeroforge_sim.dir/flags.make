@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/include"
+CXX_INCLUDES = -I"/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/include" -I"/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/external/bullet/src"
 
 CXX_FLAGSarm64 = -std=gnu++17 -arch arm64
 

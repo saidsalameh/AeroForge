@@ -96,6 +96,10 @@ aeroforge_core_EXTERNAL_OBJECTS =
 src/bindings/python/aeroforge_core.cpython-310-darwin.so: src/bindings/python/CMakeFiles/aeroforge_core.dir/bindings.cpp.o
 src/bindings/python/aeroforge_core.cpython-310-darwin.so: src/bindings/python/CMakeFiles/aeroforge_core.dir/build.make
 src/bindings/python/aeroforge_core.cpython-310-darwin.so: src/aeroforge_sim/libaeroforge_sim.a
+src/bindings/python/aeroforge_core.cpython-310-darwin.so: external/bullet/src/BulletDynamics/libBulletDynamics.a
+src/bindings/python/aeroforge_core.cpython-310-darwin.so: external/bullet/src/BulletCollision/libBulletCollision.a
+src/bindings/python/aeroforge_core.cpython-310-darwin.so: external/bullet/src/LinearMath/libLinearMath.a
+src/bindings/python/aeroforge_core.cpython-310-darwin.so: external/bullet/src/Bullet3Common/libBullet3Common.a
 src/bindings/python/aeroforge_core.cpython-310-darwin.so: src/bindings/python/CMakeFiles/aeroforge_core.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared module aeroforge_core.cpython-310-darwin.so"
 	cd "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build/src/bindings/python" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/aeroforge_core.dir/link.txt --verbose=$(VERBOSE)
