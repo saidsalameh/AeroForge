@@ -67,6 +67,8 @@ void SimCore::shutdown() {
 
     delete collision_config_;
     collision_config_ = nullptr;
+
+    std::cout << "[SimCore] shutdown(): Bullet world destroyed\n";
 }
 
 void SimCore::reset() {

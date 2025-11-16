@@ -34,6 +34,7 @@ namespace aeroforge {
 
 class SimCore {
 public:
+    /// @brief Default constructor.
     SimCore() = default;
 
     /// @brief Destructor releases all Bullet resources owned by this instance.
