@@ -1,0 +1,320 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						9,
+						10,
+						11
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "external/bullet",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-external.bullet-Debug-814e40b47679cc6cb593.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "external/bullet"
+				},
+				{
+					"build" : "external/bullet/src",
+					"childIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"jsonFile" : "directory-external.bullet.src-Debug-93ea7db2dcad00354615.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src"
+				},
+				{
+					"build" : "external/bullet/src/BulletInverseDynamics",
+					"jsonFile" : "directory-external.bullet.src.BulletInverseDynamics-Debug-8362c60a5e84469b2448.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src/BulletInverseDynamics",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "external/bullet/src/BulletSoftBody",
+					"jsonFile" : "directory-external.bullet.src.BulletSoftBody-Debug-cbce388e4cf998d40309.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src/BulletSoftBody",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "external/bullet/src/BulletCollision",
+					"jsonFile" : "directory-external.bullet.src.BulletCollision-Debug-1492e7c43f4d7abd19db.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src/BulletCollision",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "external/bullet/src/BulletDynamics",
+					"jsonFile" : "directory-external.bullet.src.BulletDynamics-Debug-2c5fd7ad36520f4128ab.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src/BulletDynamics",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "external/bullet/src/LinearMath",
+					"jsonFile" : "directory-external.bullet.src.LinearMath-Debug-469a12f331681c6f7516.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src/LinearMath",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "external/bullet/src/Bullet3Common",
+					"jsonFile" : "directory-external.bullet.src.Bullet3Common-Debug-c3295c2b92ee17e24c48.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "external/bullet/src/Bullet3Common",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "external/pybind11",
+					"jsonFile" : "directory-external.pybind11-Debug-868bf4008866ee8f945b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "external/pybind11"
+				},
+				{
+					"build" : "src/aeroforge_sim",
+					"jsonFile" : "directory-src.aeroforge_sim-Debug-f5f9fe12d57b9a50407b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/aeroforge_sim",
+					"targetIndexes" : 
+					[
+						7
+					]
+				},
+				{
+					"build" : "src/bindings/python",
+					"jsonFile" : "directory-src.bindings.python-Debug-07cf98010f4234acbc49.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src/bindings/python",
+					"targetIndexes" : 
+					[
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						10,
+						11
+					],
+					"name" : "AeroForge",
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "BULLET_PHYSICS",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						9
+					],
+					"name" : "pybind11",
+					"parentIndex" : 0
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 8,
+					"id" : "Bullet3Common::@9da5ea8bc5284a8ed858",
+					"jsonFile" : "target-Bullet3Common-Debug-a121dbc6eb26ba18f031.json",
+					"name" : "Bullet3Common",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "BulletCollision::@fdb645dca4c11a1eb010",
+					"jsonFile" : "target-BulletCollision-Debug-7c286e1529996a713afd.json",
+					"name" : "BulletCollision",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "BulletDynamics::@9b23fe93880f13138a21",
+					"jsonFile" : "target-BulletDynamics-Debug-f7597689b87959cf9c39.json",
+					"name" : "BulletDynamics",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "BulletInverseDynamics::@5d1e7cacd8ab13fa5d52",
+					"jsonFile" : "target-BulletInverseDynamics-Debug-a946164cf1845eaee07f.json",
+					"name" : "BulletInverseDynamics",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "BulletSoftBody::@e217ce6c461c1b20e363",
+					"jsonFile" : "target-BulletSoftBody-Debug-4b1658688ef307008814.json",
+					"name" : "BulletSoftBody",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "LinearMath::@e67b12a466e61263f354",
+					"jsonFile" : "target-LinearMath-Debug-db8c7780d8cdefe5e5aa.json",
+					"name" : "LinearMath",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 11,
+					"id" : "aeroforge_core::@f40a50f1a4356373f826",
+					"jsonFile" : "target-aeroforge_core-Debug-914c12291273b2fdc762.json",
+					"name" : "aeroforge_core",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "aeroforge_sim::@6fcf335896c8df1e5008",
+					"jsonFile" : "target-aeroforge_sim-Debug-24bd81b587f703ac6c04.json",
+					"name" : "aeroforge_sim",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/build",
+		"source" : "/Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}
