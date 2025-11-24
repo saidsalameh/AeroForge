@@ -56,15 +56,26 @@ class DroneNavEnv:
         return obs, info
 
     def step(self, action):
-        """Advance the environment by one step.
+        """Advance the environment by one step using the given action.
 
-        For now, the action is ignored by the physics engine (no control yet).
+        action: array-like of shape (4,), normalized in [-1, 1]
         """
-        # Placeholder: we ignore the action until SimCore supports it
-        self.sim.step()
+        
 
+        # 1) Convert to numpy and validate shape
+        action = np.asarray(action, dtype=np.float64)
+        if action.shape != (4,):
+            raise ValueError(f"Action must be a 4D vector, got shape {action.shape}")
+
+        # 2) Clip to normalized range [-1, 1]
+        action = np.clip(action, -1.0, 1.0)
+
+        # 3) Pass to simulator and advance physics
+        self.sim.set_action(action)
+        self.sim.step()
         self.step_count += 1
 
+        # 4) Build RL outputs
         obs = self.get_observation()
         reward = self.compute_reward(obs)
         done = self.check_done(obs)
@@ -72,6 +83,7 @@ class DroneNavEnv:
             "distance_to_target": float(self._distance_to_target(obs)),
         }
         return obs, reward, done, info
+
 
     def get_observation(self):
         """Return the current observation vector from the simulator.

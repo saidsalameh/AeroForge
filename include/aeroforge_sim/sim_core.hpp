@@ -60,6 +60,18 @@ public:
     /// So @p size must be at least 13.
     void getObservation(double* out, int size) const;
 
+    /// @brief Set the current control action for the drone.
+    ///
+    /// The action is a 4D vector in normalized form:
+    ///   action[0] : collective thrust command in [-1, 1]
+    ///   action[1] : roll rate command in [-1, 1]
+    ///   action[2] : pitch rate command in [-1, 1]
+    ///   action[3] : yaw rate command in [-1, 1]
+    ///
+    /// SimCore maps these normalized commands to physical units
+    /// (Newtons for thrust, rad/s for rates) and uses them in step().
+    void setAction(const double* action, int size);
+
 private:
     /// @brief Release all Bullet resources owned by this SimCore instance.
     void shutdown();
@@ -94,6 +106,28 @@ private:
     int    max_steps_per_episode_ = 1000;
     int    substeps_per_control_  = 10;
     double sim_dt_                = 0.01; // 10 ms per physics step
+
+    // --- Action storage ---
+    double thrust_cmd_ = 0.0; // in Newtons
+    btVector3 rate_cmd_{0.0, 0.0, 0.0}; // in rad/s
+
+    // --- Physical parameters ---
+    double mass_               = 1.0;    // kg
+
+    // Max thrust in Newtons (approx. 2x weight for quick maneuvers)
+    double gravity_            = 9.81;   // m/s²
+    double min_thrust_         = 0.0;    // N
+    double max_thrust_         = 2.0 * gravity_;  // N
+
+    // Max angular rates in rad/s
+    double max_roll_rate_      = 3.14;   // rad/s
+    double max_pitch_rate_     = 3.14;   // rad/s
+    double max_yaw_rate_       = 6.28;   // rad/s
+
+    // Simple proportional gains for rate controller
+    double kp_p_ = 0.1;
+    double kp_q_ = 0.1;
+    double kp_r_ = 0.1;
 };
 
 } // namespace aeroforge

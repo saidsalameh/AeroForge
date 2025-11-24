@@ -1,0 +1,11 @@
+# In this folder we describe the action model that will shape our
+# training environment
+
+Drone control model :
+action = [collective_thrust, roll_rate, pitch_rate, yaw_rate]
+
+A quadcopter drone have 6 degrees of freedom and 4 inputs.
+
+Motion control determination :
+1. Thrust 
+2. Torque

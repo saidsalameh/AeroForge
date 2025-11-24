@@ -189,3 +189,7 @@
 17083	17233	1763404790734619038	external/bullet/src/BulletSoftBody/libBulletSoftBody.a	894075c3ce0e21e6
 15697	18663	1763404789348746593	src/bindings/python/CMakeFiles/aeroforge_core.dir/bindings.cpp.o	fb7be6915f3ecf1d
 18663	18787	1763404792315134979	src/bindings/python/aeroforge_core.cpython-310-darwin.so	930a8fa5c93c5c6a
+13	2437	1763975669568624742	src/bindings/python/CMakeFiles/aeroforge_core.dir/bindings.cpp.o	fb7be6915f3ecf1d
+13	655	1763975706722738920	src/aeroforge_sim/CMakeFiles/aeroforge_sim.dir/core/sim_core.cpp.o	3048775e866cc54e
+655	723	1763975707365105264	src/aeroforge_sim/libaeroforge_sim.a	5a4b0e06ee8e4d49
+723	992	1763975707432661972	src/bindings/python/aeroforge_core.cpython-310-darwin.so	930a8fa5c93c5c6a

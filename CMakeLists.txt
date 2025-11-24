@@ -22,3 +22,17 @@ add_subdirectory(src/aeroforge_sim)
 
 # Python bindings
 add_subdirectory(src/bindings/python)
+
+# Addind tests 
+
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+# Enable CTest
+include(CTest)
+
+add_test(
+    NAME python_drone_nav_env
+    COMMAND ${Python3_EXECUTABLE} -m pytest -q tests/python/test_drone_nav_env.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+

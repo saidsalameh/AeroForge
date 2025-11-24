@@ -1,10 +1,52 @@
 #include "aeroforge_sim/sim_core.hpp"
 #include <iostream>
+#include <algorithm>
+#include <iostream>
 
 namespace aeroforge {
 
 SimCore::~SimCore() {
     shutdown();
+}
+
+void SimCore::setAction(const double* action, int size )
+{
+    // Validate drone body and input
+    if(!drone_body_){
+        std::cerr << "[Simcore] setAction: drone body not initialized \n";
+        return;
+    }
+
+    if(!action || size < 4){
+        std::cerr << "[Simcore] setAction: invalid action input \n";
+        return;
+    }
+
+    // Map normalized action to physical units
+    // Collective thrust: map from [-1, 1] to [0, max_thrust]
+    auto clamped_thrust = [](double u){
+        return std::max(0.0, std::min(1.0, (u + 1.0) / 2.0));
+    };
+
+    const double u_thrust   = clamped_thrust(action[0]);
+    const double u_p        = clamped_thrust(action[1]);
+    const double u_q        = clamped_thrust(action[2]);
+    const double u_r        = clamped_thrust(action[3]);    
+
+    // Map normalized thrust to [thrust_min_, thrust_max_]
+    // u_thrust = -1 -> thrust_min_
+    // u_thrust = +1 -> thrust_max_
+    const double half_range = 0.5 * (max_thrust_ - min_thrust_);
+    const double mid        = 0.5 * (max_thrust_ + min_thrust_);
+    thrust_cmd_             = mid + half_range * u_thrust;
+
+    // Map normalized body rates to [-max_rate, +max_rate] in rad/s
+    const double p_cmd = u_p * max_roll_rate_;
+    const double q_cmd = u_q * max_pitch_rate_;
+    const double r_cmd = u_r * max_yaw_rate_;
+
+    rate_cmd_.setValue(p_cmd, q_cmd, r_cmd);
+
 }
 
 void SimCore::initialize() {
@@ -155,8 +197,60 @@ void SimCore::step() {
         return;
     }
 
+    // If for some reason the drone body is missing, still step the world
+    if (!drone_body_) {
+        std::cerr << "[SimCore] step(): drone body not initialized\n";
+        dynamics_world_->stepSimulation(sim_dt_, substeps_per_control_);
+        ++step_count_;
+        return;
+    }
+
+    // --- 1) Thrust force in world frame ---
+
+    btTransform transform;
+    drone_body_->getMotionState()->getWorldTransform(transform);
+
+    // Unit z-axis in body frame
+    const btVector3 up_body(0, 0, 1);
+    // Corresponding direction in world frame
+    const btVector3 up_world = transform.getBasis() * up_body;
+
+    // Thrust vector in world frame (Newtons)
+    const btVector3 thrust_force = up_world * thrust_cmd_;
+
+    // Apply central thrust force (Bullet will add gravity itself)
+    drone_body_->applyCentralForce(thrust_force);
+
+    // --- 2) Simple P rate controller for attitude ---
+
+    // Angular velocity from Bullet (approx as body rates)
+    const btVector3 omega = drone_body_->getAngularVelocity();
+    const btScalar p = omega.getX();
+    const btScalar q = omega.getY();
+    const btScalar r = omega.getZ();
+
+    const btScalar e_p = rate_cmd_.getX() - p;
+    const btScalar e_q = rate_cmd_.getY() - q;
+    const btScalar e_r = rate_cmd_.getZ() - r;
+
+    const btScalar tau_x = kp_p_ * e_p;
+    const btScalar tau_y = kp_q_ * e_q;
+    const btScalar tau_z = kp_r_ * e_r;
+
+    btVector3 torque_body(tau_x, tau_y, tau_z);
+
+    // Optional: clamp torque magnitude to avoid insane spins
+    const btScalar max_torque = 1.0; // N·m, rough bound
+    if (torque_body.length() > max_torque) {
+        torque_body = torque_body.normalized() * max_torque;
+    }
+
+    drone_body_->applyTorque(torque_body);
+
+    // --- 3) Advance physics ---
     dynamics_world_->stepSimulation(sim_dt_, substeps_per_control_);
     ++step_count_;
+
 }
 
 void SimCore::getObservation(double* out, int size) const {
