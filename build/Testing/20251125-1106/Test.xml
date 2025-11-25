@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Darwin-clang++"
+	BuildStamp="20251125-1106-Experimental"
+	Name="mac.home"
+	Generator="ctest-4.1.2"
+	CompilerName="/usr/bin/clang++"
+	CompilerVersion="17.0.0.17000319"
+	OSName="macOS"
+	Hostname="mac.home"
+	OSRelease="26.1"
+	OSVersion="25B78"
+	OSPlatform="arm64"
+	Is64Bits="1"
+	VendorString="Apple"
+	VendorID="Apple"
+	FamilyID="0"
+	ModelID="0"
+	ModelName="Apple M4"
+	ProcessorCacheSize="131072"
+	NumberOfLogicalCPU="10"
+	NumberOfPhysicalCPU="10"
+	TotalVirtualMemory="0"
+	TotalPhysicalMemory="16384"
+	LogicalProcessorsPerPhysical="10"
+	ProcessorClockFrequency="0"
+	>
+	<Testing>
+		<StartDateTime>Nov 25 12:06 CET</StartDateTime>
+		<StartTestTime>1764068807</StartTestTime>
+		<TestList/>
+		<EndDateTime>Nov 25 12:06 CET</EndDateTime>
+		<EndTestTime>1764068807</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

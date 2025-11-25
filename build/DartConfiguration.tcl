@@ -14,7 +14,7 @@ CostDataFile:
 Site: mac.home
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
-BuildName: Darwin-c++
+BuildName: Darwin-clang++
 
 # Subprojects
 LabelsForSubprojects: 
@@ -63,7 +63,7 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: /usr/bin/c++
+Compiler: /usr/bin/clang++
 CompilerVersion: 17.0.0.17000319
 
 # Dynamic analysis (MemCheck)

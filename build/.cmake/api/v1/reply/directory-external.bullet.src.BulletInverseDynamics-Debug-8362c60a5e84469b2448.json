@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "external/bullet/src/BulletInverseDynamics",
+		"source" : "external/bullet/src/BulletInverseDynamics"
+	}
+}
