@@ -28,10 +28,11 @@ class DroneNavEnv:
         # --- Episode config ---
         self.max_steps = max_steps
         if target_position is None:
-            # Hover target at 10 m above origin
-            target_position = [0.0, 0.0, 10.0]
+            # Hover target at 1 m above origin
+            target_position = [0.0, 0.0, 1.0]
         self.target_position = np.array(target_position, dtype=np.float64)
-
+        
+        self.last_distance = None # To compue reward difference
         # --- Internal state ---
         self.step_count = 0
 
@@ -76,6 +77,7 @@ class DroneNavEnv:
         self.step_count = 0
 
         obs = self.get_observation()
+        self.last_distance = self._distance_to_target(obs)
         info = {}
         return obs, info
 
@@ -105,6 +107,12 @@ class DroneNavEnv:
         obs = self.get_observation()
         reward = self.compute_reward(obs)
         done = self.check_done(obs)
+
+        # 5) Additional info (optional)
+        # Computing distance to target for info
+        self.last_distance = self._distance_to_target(obs)
+
+
         info = {
             "distance_to_target": float(self._distance_to_target(obs)),  # 1D altitude error
         }
@@ -184,9 +192,11 @@ class DroneNavEnv:
         obs layout: [z, vz, dz, roll, pitch, p, q, r]
         """
         z, vz, dz, roll, pitch, p, q, r = obs
-
+        d = self._distance_to_target(obs)
+        r_progress = 0.0
+        
         # --- Reward weights (can be tuned or moved to __init__) ---
-        w_z = 2.0     # altitude error weight
+        w_z = 0.1     # altitude error weight
         w_v = 0.1     # vertical speed weight
         w_att = 0.1   # tilt weight
         w_rate = 0.01 # angular rate weight
@@ -203,7 +213,15 @@ class DroneNavEnv:
         # Penalize angular rates
         r_rate = -w_rate * (p ** 2 + q ** 2 + r ** 2)
 
-        reward = r_alt + r_vz + r_tilt + r_rate
+        
+        if self.last_distance is not None:
+            # Reward for reducing distance to target
+            r_progress = 0.1 * (self.last_distance - d)
+        self.last_distance = d
+
+    
+        # Total reward
+        reward = r_alt + r_vz + r_tilt + r_rate + r_progress
 
         return float(reward)
 
