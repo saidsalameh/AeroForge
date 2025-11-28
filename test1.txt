@@ -11,7 +11,6 @@ Using cpu device
 [SimCore] reset(): ground + drone created
 [SimCore] reset(): ground + drone created
 [SimCore] reset(): ground + drone created
-Logging to /Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge/logs/hover_ppo/PPO_10
 [SimCore] reset(): ground + drone created
 [SimCore] reset(): ground + drone created
 [SimCore] reset(): ground + drone created
