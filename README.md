@@ -193,10 +193,3 @@ Example:
 
 ---
 
-# 🛠 Add README to Git
-
-```bash
-git add README.md
-git commit -m "Add project README"
-git push origin main
-```
