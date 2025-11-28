@@ -193,19 +193,18 @@ class DroneNavEnv:
         """
         z, vz, dz, roll, pitch, p, q, r = obs
         d = self._distance_to_target(obs)
-        r_progress = 0.0
-        
-        # --- Reward weights (can be tuned or moved to __init__) ---
-        w_z = 0.1     # altitude error weight
-        w_v = 0.1     # vertical speed weight
+
+        # --- Reward weights ---
+        w_z   = 0.2   # altitude error weight
+        w_v   = 0.1   # vertical speed weight
         w_att = 0.1   # tilt weight
         w_rate = 0.01 # angular rate weight
 
         # Altitude error penalty (quadratic)
         r_alt = -w_z * (dz ** 2)
 
-        # Penalize vertical speed (absolute)
-        r_vz = -w_v * abs(vz)
+        # Penalize vertical speed (absolute, slightly buffed)
+        r_vz = -w_v * abs(vz) * 1.2
 
         # Penalize tilt (roll & pitch)
         r_tilt = -w_att * (roll ** 2 + pitch ** 2)
@@ -213,17 +212,25 @@ class DroneNavEnv:
         # Penalize angular rates
         r_rate = -w_rate * (p ** 2 + q ** 2 + r ** 2)
 
-        
+        # Progress term: reward reduction in |dz|
+        r_progress = 0.0
         if self.last_distance is not None:
-            # Reward for reducing distance to target
             r_progress = 0.1 * (self.last_distance - d)
-        self.last_distance = d
 
-    
-        # Total reward
+        # Base reward
         reward = r_alt + r_vz + r_tilt + r_rate + r_progress
 
+        # --- Hover bonus: inside a “good” band ---
+        if abs(dz) < 0.05 and abs(vz) < 0.1:
+            reward += 1.5  # good altitude + low vertical speed
+            if abs(roll) < 0.1 and abs(pitch) < 0.1:
+                reward += 0.5  # also nicely level
+
+        # Update last distance for next step
+        self.last_distance = d
+
         return float(reward)
+
 
     def check_done(self, obs: np.ndarray) -> bool:
         """Episode termination based on time limit and altitude bounds."""
@@ -233,6 +240,9 @@ class DroneNavEnv:
 
         # obs layout: [z, vz, dz, roll, pitch, p, q, r]
         z = float(obs[0])
+        dz = float(obs[2])
+        roll = float(obs[3])
+        pitch = float(obs[4])
 
         # 2) Crash: too low (below ground / crash threshold)
         z_crash = 0.1  # meters above ground considered "crashed"
@@ -242,6 +252,10 @@ class DroneNavEnv:
         # 3) Optional: too high / escaped
         z_max = 50.0  # upper safety bound
         if z > z_max:
+            return True
+        
+        # 4) Terminating the episode early so the drone don t crash and cumule negative rewards
+        if abs(dz) > 0.5 or abs(pitch) > 60 or abs(roll) > 60 :
             return True
 
         return False
