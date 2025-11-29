@@ -7,8 +7,15 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 # ---------------------------------------------------------
 episodes = []
 current_epi = []
+import pathlib
 
-with open("test1.txt") as f:
+# Get project root: .../AeroForge
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+
+# Path to the test log
+LOG_FILE = ROOT / "tests" / "logs" / "test.txt"
+
+with open(LOG_FILE, "r") as f:
     for line in f:
         s = line.strip()
 
@@ -85,7 +92,8 @@ for i, epi in enumerate(episodes, start=1):
     ax.legend()
 
     plt.tight_layout()
-    fig.savefig(f"drone_trajectory_ep{i}.png")
+    fig.savefig("tests/plot/drone_trajectories.png")
+    plt.close(fig)
 
 # Optional: show the last figure (or all, depending on backend)
-plt.show()
+# plt.show()

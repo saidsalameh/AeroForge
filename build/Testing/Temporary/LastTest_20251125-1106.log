@@ -1,3 +1,19 @@
-Start testing: Nov 29 19:21 CET
+Start testing: Nov 29 22:42 CET
 ----------------------------------------------------------
-End testing: Nov 29 19:21 CET
+2/2 Testing: drone_plot_generation
+2/2 Test: drone_plot_generation
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.10/bin/python3.10" "python/tools/plotsrcipt.py"
+Directory: /Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge
+"drone_plot_generation" start time: Nov 29 22:42 CET
+Output:
+----------------------------------------------------------
+Episodes: 5 lengths: [397, 396, 395, 395, 395]
+<end of output>
+Test time =   1.33 sec
+----------------------------------------------------------
+Test Passed.
+"drone_plot_generation" end time: Nov 29 22:42 CET
+"drone_plot_generation" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Nov 29 22:42 CET

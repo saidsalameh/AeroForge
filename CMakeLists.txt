@@ -36,3 +36,11 @@ add_test(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
+add_test(
+    NAME drone_plot_generation
+    COMMAND ${Python3_EXECUTABLE} python/tools/plotsrcipt.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+
+
