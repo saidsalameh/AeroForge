@@ -30,9 +30,15 @@ class DroneNavEnv:
 
         # --- Episode config ---
         self.max_steps = max_steps
+
+        # Previous distance components
+        self.last_dx = 0.0
+        self.last_dy = 0.0
+        self.last_dz = 0.0
+
         if target_position is None:
             # 3D target: x,y,z
-            target_position = [2.0, 2.0, 1.0]
+            target_position = [12.0, 20.0, 5.0]
         self.target_position = np.array(target_position, dtype=np.float64)
 
         # Distance to target at previous step (for progress reward)
@@ -208,50 +214,136 @@ class DroneNavEnv:
 
         obs layout:
             [x, y, z,
-             vx, vy, vz,
-             roll, pitch, yaw,
-             p, q, r,
-             dx, dy, dz]
+            vx, vy, vz,
+            roll, pitch, yaw,
+            p, q, r,
+            dx, dy, dz]
+
+        where:
+            dx, dy, dz = position error components (pos - target_pos)
         """
         x, y, z, vx, vy, vz, roll, pitch, yaw, p, q, r, dx, dy, dz = obs
-        d = self._distance_to_target(obs)
 
-        # --- Reward weights ---
-        w_pos = 0.2         # penalty on distance to target
-        w_vel = 0.2         # penalty on linear speed magnitude
-        w_tilt = 0.1        # penalty on roll and pitch
-        w_rate = 0.05       # penalty on angular rates
-        w_progress = 0.1    # weight on distance reduction
-        arrival_bonus_value = 2.0
+        # 3D distance to target
+        d = float(np.sqrt(dx * dx + dy * dy + dz * dz))
 
-        # --- Base penalties ---
-        r_pos = -w_pos * (dx * dx + dy * dy + dz * dz)
-        r_vel = -w_vel * (vx * vx + vy * vy + vz * vz)
+        # ---------------------------------------------------------------------
+        # Initialize history (first step of episode)
+        # ---------------------------------------------------------------------
+        if getattr(self, "last_distance", None) is None:
+            self.last_distance = d
+            self.last_dx = dx
+            self.last_dy = dy
+            self.last_dz = dz
+
+        # ---------------------------------------------------------------------
+        # Reward weights (tuneable hyperparameters)
+        # Inspired by typical aerospace RL shaping:
+        # - strong quadratic position penalty
+        # - moderate velocity and attitude penalties
+        # - small angular-rate penalty
+        # - shaped progress term + terminal bonus
+        # ---------------------------------------------------------------------
+        w_pos = 1.0      # position error penalty (quadratic distance)
+        w_vel = 0.2      # linear velocity magnitude
+        w_tilt = 0.2     # roll/pitch attitude
+        w_rate = 0.02    # body rates
+        w_progress = 1.0 # radial progress shaping
+        w_axis = 0.3     # per-axis progress shaping
+
+        arrival_bonus_value = 10.0  # terminal bonus when "parked" at target
+
+        # ---------------------------------------------------------------------
+        # Base penalties
+        # ---------------------------------------------------------------------
+        # 1) Quadratic distance to target (potential function)
+        r_pos = -w_pos * (d ** 2)
+
+        # 2) Penalize speed (we prefer slow, controlled motion near target)
+        speed_sq = vx * vx + vy * vy + vz * vz
+        r_vel = -w_vel * speed_sq
+
+        # 3) Penalize attitude deviations (keep drone "level")
         r_tilt = -w_tilt * (roll * roll + pitch * pitch)
+
+        # 4) Penalize angular rates (avoid aggressive spinning)
         r_rate = -w_rate * (p * p + q * q + r * r)
 
-        # --- Progress term: reward reduction in distance ---
-        r_progress = 0.0
+        # ---------------------------------------------------------------------
+        # Radial distance progress (NASA-style potential shaping)
+        # F(s) = -k * d^2  -> reward_shaping ≈ F(s') - F(s)
+        # Here we use a simple linear term on d for stability.
+        # ---------------------------------------------------------------------
+        r_progress_radial = 0.0
         if self.last_distance is not None:
-            r_progress = w_progress * (self.last_distance - d)
+            delta_d = self.last_distance - d  # >0 if we moved closer
+            r_progress_radial = w_progress * delta_d
 
-        # --- Arrival bonus ---
-        d_tol = 0.1   # 10 cm ball around target
-        v_tol = 0.2   # small linear speed
-        tilt_tol = 0.2  # rad (~11 degrees)
+        # ---------------------------------------------------------------------
+        # Per-axis progress (Airbus-style: directional guidance)
+        # Reward only improvements in |dx|, |dy|, |dz| (moving toward target).
+        # ---------------------------------------------------------------------
+        r_progress_axis = 0.0
+        last_abs_dx = abs(self.last_dx)
+        last_abs_dy = abs(self.last_dy)
+        last_abs_dz = abs(self.last_dz)
+
+        abs_dx = abs(dx)
+        abs_dy = abs(dy)
+        abs_dz = abs(dz)
+
+        delta_abs_dx = last_abs_dx - abs_dx
+        delta_abs_dy = last_abs_dy - abs_dy
+        delta_abs_dz = last_abs_dz - abs_dz
+
+        # Only reward progress (positive improvement); ignore regress
+        axis_progress_sum = max(delta_abs_dx, 0.0) \
+                        + max(delta_abs_dy, 0.0) \
+                        + max(delta_abs_dz, 0.0)
+
+        r_progress_axis = w_axis * axis_progress_sum
+
+        # ---------------------------------------------------------------------
+        # Arrival / "parked" bonus near target
+        # ---------------------------------------------------------------------
+        d_tol = 0.1   # 10 cm radius around target
+        v_tol = 0.2   # m/s
+        tilt_tol = 0.2  # rad (~11 deg)
+
+        speed_mag = float(np.sqrt(speed_sq))
 
         arrival_bonus = 0.0
-        speed_mag = sqrt(vx * vx + vy * vy + vz * vz)
-        if d < d_tol and speed_mag < v_tol and abs(roll) < tilt_tol and abs(pitch) < tilt_tol:
+        if (
+            d < d_tol
+            and speed_mag < v_tol
+            and abs(roll) < tilt_tol
+            and abs(pitch) < tilt_tol
+        ):
             arrival_bonus = arrival_bonus_value
 
+        # ---------------------------------------------------------------------
         # Total reward
-        reward = r_pos + r_vel + r_tilt + r_rate + r_progress + arrival_bonus
+        # ---------------------------------------------------------------------
+        reward = (
+            r_pos
+            + r_vel
+            + r_tilt
+            + r_rate
+            + r_progress_radial
+            + r_progress_axis
+            + arrival_bonus
+        )
 
-        # Update last distance for next step
+        # ---------------------------------------------------------------------
+        # Update history for next step
+        # ---------------------------------------------------------------------
         self.last_distance = d
+        self.last_dx = dx
+        self.last_dy = dy
+        self.last_dz = dz
 
         return float(reward)
+
 
     def check_done(self, obs: np.ndarray) -> bool:
         """Episode termination based on time limit and safety bounds."""

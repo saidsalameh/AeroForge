@@ -37,3 +37,18 @@ python3.10 -m pytest tests/python/test_drone_nav_env.py -q
 
 cd build
 ctest -R python_drone_nav_env --output-on-failure
+
+
+# From inside the repo
+git checkout stage5
+git add .
+git commit -m "Complete Stage 5 development"
+
+git checkout main
+git pull origin main
+git merge stage5
+git push origin main
+
+# cleanup
+git branch -d stage5
+git push origin --delete stage5   # optional
