@@ -1,3 +1,40 @@
-Start testing: Nov 28 09:09 CET
+Start testing: Nov 29 12:06 CET
 ----------------------------------------------------------
-End testing: Nov 28 09:09 CET
+1/1 Testing: python_drone_nav_env
+1/1 Test: python_drone_nav_env
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.10/bin/python3.10" "-m" "pytest" "-q" "tests/python/test_drone_nav_env.py"
+Directory: /Users/said/Library/CloudStorage/OneDrive-Personnel/Project Documents/AeroForge
+"python_drone_nav_env" start time: Nov 29 12:06 CET
+Output:
+----------------------------------------------------------
+.....                                                                    [100%]
+5 passed in 0.12s
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] initialize(): Bullet world created
+[SimCore] reset(): ground + drone created
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] initialize(): Bullet world created
+[SimCore] reset(): ground + drone created
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] initialize(): Bullet world created
+[SimCore] reset(): ground + drone created
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] initialize(): Bullet world created
+[SimCore] reset(): ground + drone created
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] shutdown(): Bullet world destroyed
+[SimCore] initialize(): Bullet world created
+[SimCore] reset(): ground + drone created
+[SimCore] shutdown(): Bullet world destroyed
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"python_drone_nav_env" end time: Nov 29 12:06 CET
+"python_drone_nav_env" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 29 12:06 CET

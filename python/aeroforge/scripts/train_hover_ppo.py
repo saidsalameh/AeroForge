@@ -12,7 +12,8 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 # ---------------------------------------------------------------------------
 
 HERE = pathlib.Path(__file__).resolve()
-# This file is expected at: python/aeroforge/scripts/train_hover_ppo.py
+# Expected path of this file:
+#   python/aeroforge/scripts/train_hover_ppo.py
 # parents[0] -> scripts
 # parents[1] -> aeroforge
 # parents[2] -> python
@@ -34,13 +35,13 @@ from aeroforge.envs.drone_nav_env import DroneNavEnv
 
 class DroneNavGymEnv(gym.Env):
     """
-    Small adapter to make DroneNavEnv compatible with Gymnasium / Stable-Baselines3.
+    Adapter to make DroneNavEnv compatible with Gymnasium / Stable-Baselines3.
 
-    Internally uses DroneNavEnv, which has:
+    DroneNavEnv API:
         reset() -> (obs, info)
         step(action) -> (obs, reward, done, info)
 
-    Here we expose:
+    Gymnasium API:
         reset(seed=None, options=None) -> (obs, info)
         step(action) -> (obs, reward, terminated, truncated, info)
     """
@@ -65,9 +66,9 @@ class DroneNavGymEnv(gym.Env):
         # DroneNavEnv returns: obs, reward, done, info
         obs, reward, done, info = self._env.step(action)
 
-        # Gymnasium separates termination/reason:
-        terminated = bool(done)   # episode ended due to task or failure
-        truncated = False         # no time-limit truncation handled here (env does it as termination)
+        # Gymnasium separates termination reasons:
+        terminated = bool(done)   # episode ended due to task/failure
+        truncated = False         # we treat time-limit as normal termination
 
         return obs, reward, terminated, truncated, info
 
@@ -92,7 +93,7 @@ def make_env(max_steps: int = 500):
 
 
 # ---------------------------------------------------------------------------
-# Training configuration
+# Training configuration (Stage 5: 3D navigation)
 # ---------------------------------------------------------------------------
 
 N_ENVS = 4
@@ -103,9 +104,10 @@ N_STEPS = 1024
 BATCH_SIZE = 256
 GAMMA = 0.99
 
-LOG_DIR = ROOT / "logs" / "hover_ppo"
-MODEL_DIR = ROOT / "models" / "hover_ppo"
-MODEL_PATH = MODEL_DIR / "ppo_drone_hover"
+# Use Stage-5 specific directories to avoid mixing with hover-only runs
+LOG_DIR = ROOT / "logs" / "nav3d_ppo"
+MODEL_DIR = ROOT / "models" / "nav3d_ppo"
+MODEL_PATH = MODEL_DIR / "ppo_drone_nav3d"
 
 
 def main():
@@ -153,6 +155,15 @@ def main():
     eval_env = DroneNavGymEnv(max_steps=500)
     model = PPO.load(str(MODEL_PATH))
 
+    # Observation layout in Stage 5:
+    # obs = [
+    #   0: x,  1: y,  2: z,
+    #   3: vx, 4: vy, 5: vz,
+    #   6: roll, 7: pitch, 8: yaw,
+    #   9: p, 10: q, 11: r,
+    #   12: dx, 13: dy, 14: dz
+    # ]
+
     n_eval_episodes = 5
     for ep in range(n_eval_episodes):
         obs, info = eval_env.reset()
@@ -165,25 +176,34 @@ def main():
             done = terminated or truncated
             ep_reward += reward
 
+            x, y, z = obs[0], obs[1], obs[2]
+            vx, vy, vz = obs[3], obs[4], obs[5]
+            roll, pitch, yaw = obs[6], obs[7], obs[8]
+            p, q, r = obs[9], obs[10], obs[11]
+            dx, dy, dz = obs[12], obs[13], obs[14]
+
+            target_x = x - dx
+            target_y = y - dy
+            target_z = z - dz
+
             print("\n" + "============================================================")
             print(f"[Eval] Episode {ep+1} | Step {eval_env.step_count}")
             print("-------------------------------------------------------------")
 
+            print(f"  • Reward this step         : {reward: .4f}")
+            print(f"  • Cumulative reward        : {ep_reward: .4f}")
 
-            print(f"  • Reward this step     : {reward: .4f}")
-            print(f"  • Cumulative reward    : {ep_reward: .4f}")
+            print("\n  • Position & velocity:")
+            print(f"       pos (x, y, z)         : {x: .4f}, {y: .4f}, {z: .4f}")
+            print(f"       vel (vx, vy, vz)      : {vx: .4f}, {vy: .4f}, {vz: .4f}")
 
-            print("\n  • Observation:")
-            print(f"       z (altitude)      : {obs[0]: .4f}")
-            print(f"       vz (vert. vel)    : {obs[1]: .4f}")
-            print(f"       dz (err to target): {obs[2]: .4f}")
-            print(f"       roll, pitch       : {obs[3]: .4f}, {obs[4]: .4f}")
-            print(f"       p,q,r (ang rates) : {obs[5]: .4f}, {obs[6]: .4f}, {obs[7]: .4f}")
+            print("\n  • Attitude & rates:")
+            print(f"       roll, pitch, yaw      : {roll: .4f}, {pitch: .4f}, {yaw: .4f}")
+            print(f"       p, q, r (ang rates)   : {p: .4f}, {q: .4f}, {r: .4f}")
 
-            target_z = obs[0] - obs[2]   # since dz = z - target_z
-            print(f"\n  • Target altitude      : {target_z: .4f}")
-            print(f"  • Current altitude     : {obs[0]: .4f}")
-            print(f"  • Altitude error (dz)  : {obs[2]: .4f}")
+            print("\n  • Target tracking:")
+            print(f"       target (x, y, z)      : {target_x: .4f}, {target_y: .4f}, {target_z: .4f}")
+            print(f"       error  (dx, dy, dz)   : {dx: .4f}, {dy: .4f}, {dz: .4f}")
 
             print("\n  • Info dict:")
             for k, v in info.items():
@@ -191,8 +211,8 @@ def main():
 
             print("="*60 + "\n")
 
-
-        print(f"[Eval] Episode {ep+1} | Step {eval_env.step_count}")
+        print(f"[Eval] Episode {ep+1}/{n_eval_episodes} | Final step {eval_env.step_count}")
+        print(f"[Eval] Episode {ep+1} total reward = {ep_reward: .4f}")
 
     eval_env.close()
 

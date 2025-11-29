@@ -547,14 +547,14 @@
 				{
 					"directoryIndex" : 11,
 					"id" : "aeroforge_core::@f40a50f1a4356373f826",
-					"jsonFile" : "target-aeroforge_core-Debug-914c12291273b2fdc762.json",
+					"jsonFile" : "target-aeroforge_core-Debug-742111e30f8b83797e49.json",
 					"name" : "aeroforge_core",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 10,
 					"id" : "aeroforge_sim::@6fcf335896c8df1e5008",
-					"jsonFile" : "target-aeroforge_sim-Debug-24bd81b587f703ac6c04.json",
+					"jsonFile" : "target-aeroforge_sim-Debug-d430cf05fade4984b882.json",
 					"name" : "aeroforge_sim",
 					"projectIndex" : 0
 				}

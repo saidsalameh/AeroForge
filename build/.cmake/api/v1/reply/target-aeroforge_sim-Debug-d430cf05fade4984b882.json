@@ -83,6 +83,10 @@
 	[
 		{
 			"backtrace" : 2,
+			"id" : "Bullet3Common::@9da5ea8bc5284a8ed858"
+		},
+		{
+			"backtrace" : 2,
 			"id" : "BulletCollision::@fdb645dca4c11a1eb010"
 		},
 		{
@@ -92,10 +96,6 @@
 		{
 			"backtrace" : 2,
 			"id" : "LinearMath::@e67b12a466e61263f354"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "Bullet3Common::@9da5ea8bc5284a8ed858"
 		}
 	],
 	"id" : "aeroforge_sim::@6fcf335896c8df1e5008",

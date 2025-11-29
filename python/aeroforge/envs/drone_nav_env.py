@@ -1,4 +1,5 @@
 import numpy as np
+from math import sqrt
 
 from aeroforge.core.simcore_loader import SimCore
 
@@ -6,18 +7,20 @@ from aeroforge.core.simcore_loader import SimCore
 class DroneNavEnv:
     """Drone navigation environment wrapping the C++ SimCore physics.
 
-    Stage 4: Hover task at target altitude (default z = 10 m).
+    Stage 5: 3D navigation to a fixed target position.
 
-    Observation layout (8D):
-        obs = [ z, vz, dz, roll, pitch, p, q, r ]
+    Observation layout (15D):
+
+        obs = [
+            x, y, z,                 # 0–2   position (world)
+            vx, vy, vz,              # 3–5   linear velocity
+            roll, pitch, yaw,        # 6–8   attitude (rad)
+            p, q, r,                 # 9–11  angular rates (rad/s)
+            dx, dy, dz               # 12–14 position error to target
+        ]
 
     where:
-        z      = altitude (m)
-        vz     = vertical velocity (m/s)
-        dz     = z - z_target (altitude error, m)
-        roll   = roll angle (rad)
-        pitch  = pitch angle (rad)
-        p, q, r= body angular rates (rad/s)
+        [dx, dy, dz] = [x - x_target, y - y_target, z - z_target].
     """
 
     def __init__(self, max_steps: int = 500, target_position=None):
@@ -28,11 +31,13 @@ class DroneNavEnv:
         # --- Episode config ---
         self.max_steps = max_steps
         if target_position is None:
-            # Hover target at 1 m above origin
-            target_position = [0.0, 0.0, 1.0]
+            # 3D target: x,y,z
+            target_position = [2.0, 2.0, 1.0]
         self.target_position = np.array(target_position, dtype=np.float64)
-        
-        self.last_distance = None # To compue reward difference
+
+        # Distance to target at previous step (for progress reward)
+        self.last_distance = None
+
         # --- Internal state ---
         self.step_count = 0
 
@@ -40,8 +45,8 @@ class DroneNavEnv:
         try:
             import gymnasium as gym
 
-            # Reduced obs is 8D: [z, vz, dz, roll, pitch, p, q, r]
-            obs_dim = 8
+            # 15D observation: [x,y,z, vx,vy,vz, roll,pitch,yaw, p,q,r, dx,dy,dz]
+            obs_dim = 15
 
             self.observation_space = gym.spaces.Box(
                 low=-np.inf,
@@ -69,11 +74,6 @@ class DroneNavEnv:
     def reset(self):
         """Reset the environment to the initial state."""
         self.sim.reset()
-        # Inform SimCore of the target (for future use if needed)
-        # self.sim.set_target_position(self.target_position.tolist())
-
-        # For Stage 4, we assume SimCore.reset() places the drone
-        # in a reasonable initial state near the target.
         self.step_count = 0
 
         obs = self.get_observation()
@@ -108,13 +108,8 @@ class DroneNavEnv:
         reward = self.compute_reward(obs)
         done = self.check_done(obs)
 
-        # 5) Additional info (optional)
-        # Computing distance to target for info
-        self.last_distance = self._distance_to_target(obs)
-
-
         info = {
-            "distance_to_target": float(self._distance_to_target(obs)),  # 1D altitude error
+            "distance_to_target": float(self._distance_to_target(obs)),
         }
         return obs, reward, done, info
 
@@ -148,10 +143,14 @@ class DroneNavEnv:
         return np.array([roll_x, pitch_y, yaw_z], dtype=np.float64)
 
     def get_observation(self):
-        """Return reduced observation for the hover task.
+        """Return 15D observation for 3D navigation.
 
         Layout:
-            [ z, vz, dz, roll, pitch, p, q, r ]
+            [x, y, z,
+             vx, vy, vz,
+             roll, pitch, yaw,
+             p, q, r,
+             dx, dy, dz]
         """
         # Raw layout from SimCore: [pos(3), quat(4), lin_vel(3), ang_vel(3)]
         raw = np.asarray(self.sim.get_observation(), dtype=np.float64)
@@ -161,101 +160,128 @@ class DroneNavEnv:
         lin_vel = raw[7:10]
         ang_vel = raw[10:13]
 
+        # Positions
+        x = float(pos[0])
+        y = float(pos[1])
         z = float(pos[2])
+
+        # Linear velocity
+        vx = float(lin_vel[0])
+        vy = float(lin_vel[1])
         vz = float(lin_vel[2])
 
+        # Attitude
         roll_x, pitch_y, yaw_z = self.to_Euler(quat)
 
-        # Altitude error: current altitude minus target altitude
-        target_z = float(self.target_position[2])
-        dz = z - target_z
+        # Angular rates
+        p = float(ang_vel[0])
+        q = float(ang_vel[1])
+        r = float(ang_vel[2])
 
-        reduced_obs = np.array(
-            [z, vz, dz, roll_x, pitch_y, ang_vel[0], ang_vel[1], ang_vel[2]],
+        # Position error to target
+        dx = x - float(self.target_position[0])
+        dy = y - float(self.target_position[1])
+        dz = z - float(self.target_position[2])
+
+        obs = np.array(
+            [x, y, z,
+             vx, vy, vz,
+             roll_x, pitch_y, yaw_z,
+             p, q, r,
+             dx, dy, dz],
             dtype=np.float64,
         )
-        return reduced_obs
+        return obs
 
     # -------------------------------------------------------------------------
     # Helpers for reward and termination
     # -------------------------------------------------------------------------
 
     def _distance_to_target(self, obs: np.ndarray) -> float:
-        """1D distance in altitude between current z and target z."""
-        # obs layout: [z, vz, dz, roll, pitch, p, q, r]
-        dz = float(obs[2])  # z - z_target
-        return abs(dz)
+        """3D Euclidean distance between current position and target."""
+        # obs[12:15] are [dx, dy, dz]
+        dx, dy, dz = obs[12:15]
+        return float(sqrt(dx * dx + dy * dy + dz * dz))
 
     def compute_reward(self, obs: np.ndarray) -> float:
-        """Reward for hover at target altitude.
+        """Reward for 3D navigation to target.
 
-        obs layout: [z, vz, dz, roll, pitch, p, q, r]
+        obs layout:
+            [x, y, z,
+             vx, vy, vz,
+             roll, pitch, yaw,
+             p, q, r,
+             dx, dy, dz]
         """
-        z, vz, dz, roll, pitch, p, q, r = obs
+        x, y, z, vx, vy, vz, roll, pitch, yaw, p, q, r, dx, dy, dz = obs
         d = self._distance_to_target(obs)
 
         # --- Reward weights ---
-        w_z   = 0.2   # altitude error weight
-        w_v   = 0.1   # vertical speed weight
-        w_att = 0.1   # tilt weight
-        w_rate = 0.01 # angular rate weight
+        w_pos = 0.2         # penalty on distance to target
+        w_vel = 0.2         # penalty on linear speed magnitude
+        w_tilt = 0.1        # penalty on roll and pitch
+        w_rate = 0.05       # penalty on angular rates
+        w_progress = 0.1    # weight on distance reduction
+        arrival_bonus_value = 2.0
 
-        # Altitude error penalty (quadratic)
-        r_alt = -w_z * (dz ** 2)
+        # --- Base penalties ---
+        r_pos = -w_pos * (dx * dx + dy * dy + dz * dz)
+        r_vel = -w_vel * (vx * vx + vy * vy + vz * vz)
+        r_tilt = -w_tilt * (roll * roll + pitch * pitch)
+        r_rate = -w_rate * (p * p + q * q + r * r)
 
-        # Penalize vertical speed (absolute, slightly buffed)
-        r_vz = -w_v * abs(vz) * 1.2
-
-        # Penalize tilt (roll & pitch)
-        r_tilt = -w_att * (roll ** 2 + pitch ** 2)
-
-        # Penalize angular rates
-        r_rate = -w_rate * (p ** 2 + q ** 2 + r ** 2)
-
-        # Progress term: reward reduction in |dz|
+        # --- Progress term: reward reduction in distance ---
         r_progress = 0.0
         if self.last_distance is not None:
-            r_progress = 0.1 * (self.last_distance - d)
+            r_progress = w_progress * (self.last_distance - d)
 
-        # Base reward
-        reward = r_alt + r_vz + r_tilt + r_rate + r_progress
+        # --- Arrival bonus ---
+        d_tol = 0.1   # 10 cm ball around target
+        v_tol = 0.2   # small linear speed
+        tilt_tol = 0.2  # rad (~11 degrees)
 
-        # --- Hover bonus: inside a “good” band ---
-        if abs(dz) < 0.05 and abs(vz) < 0.1:
-            reward += 1.5  # good altitude + low vertical speed
-            if abs(roll) < 0.1 and abs(pitch) < 0.1:
-                reward += 0.5  # also nicely level
+        arrival_bonus = 0.0
+        speed_mag = sqrt(vx * vx + vy * vy + vz * vz)
+        if d < d_tol and speed_mag < v_tol and abs(roll) < tilt_tol and abs(pitch) < tilt_tol:
+            arrival_bonus = arrival_bonus_value
+
+        # Total reward
+        reward = r_pos + r_vel + r_tilt + r_rate + r_progress + arrival_bonus
 
         # Update last distance for next step
         self.last_distance = d
 
         return float(reward)
 
-
     def check_done(self, obs: np.ndarray) -> bool:
-        """Episode termination based on time limit and altitude bounds."""
+        """Episode termination based on time limit and safety bounds."""
         # 1) Time limit
         if self.step_count >= self.max_steps:
             return True
 
-        # obs layout: [z, vz, dz, roll, pitch, p, q, r]
-        z = float(obs[0])
-        dz = float(obs[2])
-        roll = float(obs[3])
-        pitch = float(obs[4])
+        # obs layout:
+        # [x, y, z, vx, vy, vz, roll, pitch, yaw, p, q, r, dx, dy, dz]
+        x, y, z = float(obs[0]), float(obs[1]), float(obs[2])
+        d = self._distance_to_target(obs)
 
-        # 2) Crash: too low (below ground / crash threshold)
+        # 2) Success: close enough to target
+        d_tol = 0.1
+        if d < d_tol:
+            return True
+
+        # 3) Crash: too low (below ground / crash threshold)
         z_crash = 0.1  # meters above ground considered "crashed"
         if z < z_crash:
             return True
 
-        # 3) Optional: too high / escaped
-        z_max = 50.0  # upper safety bound
-        if z > z_max:
+        # 4) Out-of-bounds in position
+        max_radius = 50.0
+        if sqrt(x * x + y * y + z * z) > max_radius:
             return True
-        
-        # 4) Terminating the episode early so the drone don t crash and cumule negative rewards
-        if abs(dz) > 0.5 or abs(pitch) > 60 or abs(roll) > 60 :
+
+        # 5) Too high
+        z_max = 50.0
+        if z > z_max:
             return True
 
         return False
@@ -264,4 +290,3 @@ class DroneNavEnv:
         """Optional cleanup hook."""
         # For now, nothing special to do.
         pass
-# End of drone_nav_env.py

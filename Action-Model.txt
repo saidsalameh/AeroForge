@@ -9,3 +9,31 @@ A quadcopter drone have 6 degrees of freedom and 4 inputs.
 Motion control determination :
 1. Thrust 
 2. Torque
+
+Index  Name           Description
+-----  -------------  -------------------------------------------
+0      x              Position in world X (meters)
+1      y              Position in world Y (meters)
+2      z              Position in world Z (meters, altitude)
+
+3      vx             Linear velocity along X (m/s)
+4      vy             Linear velocity along Y (m/s)
+5      vz             Linear velocity along Z (m/s)
+
+6      roll           Roll angle about X (rad)
+7      pitch          Pitch angle about Y (rad)
+8      yaw            Yaw angle about Z (rad)
+
+9      p              Angular rate around X (rad/s)
+10     q              Angular rate around Y (rad/s)
+11     r              Angular rate around Z (rad/s)
+
+12     dx             x - x_target (position error in X)
+13     dy             y - y_target (position error in Y)
+14     dz             z - z_target (position error in Z)
+
+
+python3.10 -m pytest tests/python/test_drone_nav_env.py -q
+
+cd build
+ctest -R python_drone_nav_env --output-on-failure
