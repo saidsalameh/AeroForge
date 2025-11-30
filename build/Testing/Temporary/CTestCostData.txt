@@ -1,4 +1,4 @@
-python_drone_nav_env 11 0.0350658
-drone_plot_generation 8 0.158271
-drone_train 1 17.6645
+python_drone_nav_env 12 0.040535
+drone_plot_generation 9 0.139206
+drone_train 2 8.86836
 ---

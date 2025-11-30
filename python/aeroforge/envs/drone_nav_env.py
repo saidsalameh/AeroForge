@@ -38,7 +38,7 @@ class DroneNavEnv:
 
         if target_position is None:
             # 3D target: x,y,z
-            target_position = [12.0, 20.0, 5.0]
+            target_position = [2.0, 2.0, 1.0]
         self.target_position = np.array(target_position, dtype=np.float64)
 
         # Distance to target at previous step (for progress reward)
