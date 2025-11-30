@@ -52,3 +52,10 @@ git push origin main
 # cleanup
 git branch -d stage5
 git push origin --delete stage5   # optional
+
+
+cmake -S . -B build
+cmake --build build -j$(nproc)
+
+cd build
+ctest --output-on-failure

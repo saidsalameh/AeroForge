@@ -25,40 +25,11 @@
 	ProcessorClockFrequency="0"
 	>
 	<Testing>
-		<StartDateTime>Nov 29 22:42 CET</StartDateTime>
-		<StartTestTime>1764452526</StartTestTime>
-		<TestList>
-			<Test>./drone_plot_generation</Test>
-		</TestList>
-		<Test Status="passed">
-			<Name>drone_plot_generation</Name>
-			<Path>.</Path>
-			<FullName>./drone_plot_generation</FullName>
-			<FullCommandLine>/opt/homebrew/Frameworks/Python.framework/Versions/3.10/bin/python3.10 "python/tools/plotsrcipt.py"</FullCommandLine>
-			<Results>
-				<NamedMeasurement type="numeric/double" name="Execution Time">
-					<Value>1.33052</Value>
-				</NamedMeasurement>
-				<NamedMeasurement type="numeric/double" name="Processors">
-					<Value>1</Value>
-				</NamedMeasurement>
-				<NamedMeasurement type="text/string" name="Completion Status">
-					<Value>Completed</Value>
-				</NamedMeasurement>
-				<NamedMeasurement type="text/string" name="Command Line">
-					<Value>/opt/homebrew/Frameworks/Python.framework/Versions/3.10/bin/python3.10 "python/tools/plotsrcipt.py"</Value>
-				</NamedMeasurement>
-				<NamedMeasurement type="text/string" name="Environment">
-					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
-				</NamedMeasurement>
-				<Measurement>
-					<Value>Episodes: 5 lengths: [397, 396, 395, 395, 395]
-</Value>
-				</Measurement>
-			</Results>
-		</Test>
-		<EndDateTime>Nov 29 22:42 CET</EndDateTime>
-		<EndTestTime>1764452527</EndTestTime>
+		<StartDateTime>Nov 30 13:22 CET</StartDateTime>
+		<StartTestTime>1764505363</StartTestTime>
+		<TestList/>
+		<EndDateTime>Nov 30 13:22 CET</EndDateTime>
+		<EndTestTime>1764505363</EndTestTime>
 		<ElapsedMinutes>0</ElapsedMinutes>
 	</Testing>
 </Site>

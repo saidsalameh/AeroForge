@@ -13,7 +13,7 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 # Path to the test log
-LOG_FILE = ROOT / "tests" / "logs" / "test.txt"
+LOG_FILE = ROOT / "tests" / "logs" / "train_output.txt"
 
 with open(LOG_FILE, "r") as f:
     for line in f:

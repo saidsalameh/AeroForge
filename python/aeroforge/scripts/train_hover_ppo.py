@@ -109,11 +109,33 @@ LOG_DIR = ROOT / "logs" / "nav3d_ppo"
 MODEL_DIR = ROOT / "models" / "nav3d_ppo"
 MODEL_PATH = MODEL_DIR / "ppo_drone_nav3d"
 
+# Prepare log file
+LOG_FILE = pathlib.Path(__file__).resolve().parents[3] / "tests" / "logs" / "train_output.txt"
+LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+# Duplicate stdout → file + terminal
+class Tee(object):
+    def __init__(self, *files):
+        self.files = files
+    def write(self, obj):
+        for f in self.files:
+            f.write(obj)
+            f.flush()
+    def flush(self):
+        for f in self.files:
+            f.flush()
+
 
 def main():
     # Create output directories if they don't exist
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
+
+
+
+    # Redirect output
+    sys.stdout = Tee(sys.stdout, open(LOG_FILE, "w"))
+    sys.stderr = Tee(sys.stderr, open(LOG_FILE, "a"))
 
     # -----------------------------------------------------------------------
     # 1) Create vectorized environment
