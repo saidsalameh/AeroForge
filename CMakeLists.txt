@@ -47,5 +47,23 @@ add_test(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
+# --------------------------------------------
+# Functional test: Stage 6 PPO training (waypoints)
+# --------------------------------------------
+add_test(
+    NAME train_waypoint_ppo
+    COMMAND ${Python3_EXECUTABLE} python/aeroforge/scripts/train_waypoint_ppo.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+# --------------------------------------------
+# Post-processing test: trajectory plot generation
+# --------------------------------------------
+add_test(
+    NAME drone_plot_generation_waypoint
+    COMMAND ${Python3_EXECUTABLE} python/tools/plotsrcipt_ppo.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 
 

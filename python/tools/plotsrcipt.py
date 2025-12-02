@@ -43,7 +43,7 @@ print("Episodes:", len(episodes), "lengths:", [len(e) for e in episodes])
 # ---------------------------------------------------------
 # Target position (same as in DroneNavEnv for Stage 5)
 # ---------------------------------------------------------
-target_pos = (12.0, 20.0, 5.0)
+target_pos = [4.0, 4.0, 2.0]
 
 # ---------------------------------------------------------
 # Plot each episode separately
@@ -92,7 +92,7 @@ for i, epi in enumerate(episodes, start=1):
     ax.legend()
 
     plt.tight_layout()
-    fig.savefig("tests/plot/drone_trajectories.png")
+    fig.savefig(f"tests/plot/drone_trajectories {i}.png")
     plt.close(fig)
 
 # Optional: show the last figure (or all, depending on backend)
