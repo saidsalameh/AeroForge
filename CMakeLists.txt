@@ -4,17 +4,59 @@ project(AeroForge LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# --- Bullet configuration: disable demos / extras / tests ---
+# ===========================================================
+#  GLOBAL COMPILER WARNINGS
+# ===========================================================
+add_compile_options(
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Wshadow
+    -Wconversion
+)
+
+# ===========================================================
+#  MISRA-LIKE STATIC ANALYSIS (clang-tidy + cppcheck)
+# ===========================================================
+
+# ---- clang-tidy (cppcoreguidelines = MISRA-like)
+find_program(CLANG_TIDY clang-tidy)
+if (CLANG_TIDY)
+    message(STATUS "clang-tidy found: enabling MISRA-like checks")
+    set(CMAKE_CXX_CLANG_TIDY
+        clang-tidy;
+        -checks=cppcoreguidelines-*,clang-analyzer-*,bugprone-*;
+        -warnings-as-errors=*;
+    )
+endif()
+
+# ---- cppcheck (MISRA C++ 2008)
+find_program(CPPCHECK cppcheck)
+if (CPPCHECK)
+    message(STATUS "cppcheck found: enabling MISRA C++ static analysis")
+    set(CMAKE_CXX_CPPCHECK
+        cppcheck;
+        --enable=all;
+        --std=c++17;
+        --inline-suppr;
+        --library=misra;
+        --suppress=missingIncludeSystem;
+    )
+endif()
+
+# ===========================================================
+#  Bullet configuration
+# ===========================================================
 set(BUILD_BULLET2_DEMOS OFF CACHE BOOL "" FORCE)
 set(BUILD_BULLET3 OFF CACHE BOOL "" FORCE)
 set(BUILD_EXTRAS OFF CACHE BOOL "" FORCE)
 set(BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE)
 set(BUILD_OPENGL3_DEMOS OFF CACHE BOOL "" FORCE)
 
-# --- Bullet as subdirectory ---
+# Bullet as subdirectory
 add_subdirectory(external/bullet)
 
-# --- pybind11 ---
+# pybind11
 add_subdirectory(external/pybind11)
 
 # Core simulation library
@@ -23,11 +65,10 @@ add_subdirectory(src/aeroforge_sim)
 # Python bindings
 add_subdirectory(src/bindings/python)
 
-# Addind tests 
-
+# ===========================================================
+#  TESTING CONFIGURATION
+# ===========================================================
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
-
-# Enable CTest
 include(CTest)
 
 add_test(
@@ -41,29 +82,21 @@ add_test(
     COMMAND ${Python3_EXECUTABLE} python/aeroforge/scripts/train_hover_ppo.py
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
+
 add_test(
     NAME drone_plot_generation
     COMMAND ${Python3_EXECUTABLE} python/tools/plotsrcipt.py
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
-# --------------------------------------------
-# Functional test: Stage 6 PPO training (waypoints)
-# --------------------------------------------
 add_test(
     NAME train_waypoint_ppo
     COMMAND ${Python3_EXECUTABLE} python/aeroforge/scripts/train_waypoint_ppo.py
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
-# --------------------------------------------
-# Post-processing test: trajectory plot generation
-# --------------------------------------------
 add_test(
     NAME drone_plot_generation_waypoint
     COMMAND ${Python3_EXECUTABLE} python/tools/plotsrcipt_ppo.py
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
-
-
-

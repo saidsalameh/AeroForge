@@ -1,6 +1,0 @@
-python_drone_nav_env 29 0.0126997
-drone_plot_generation 29 0.0406567
-drone_train 21 0.868882
-train_waypoint_ppo 5 9.40527
-drone_plot_generation_waypoint 3 0.342187
----
